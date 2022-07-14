@@ -1,0 +1,9 @@
+@startuml
+
+participant local_client
+participant remote_server
+participant producer
+
+
+
+@enduml
