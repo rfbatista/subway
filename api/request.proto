@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option go_package = "api/proto";
+
+message Request {
+	string Method  = 1; 
+	string Headers = 2;
+	string Body    = 3;
+}
