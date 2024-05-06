@@ -1,0 +1,49 @@
+@startuml
+skinparam linetype ortho
+node clientapp as "Client application"
+node serverapp as "Server application"
+node clientdb
+node serverdb
+
+package server {
+  node webrtcs as "WebRTC"
+  node parsers as "Request Manager"
+  node stores as "Request Store"
+  node eventmanagers as "Event Manager"
+  node httpserver as "HTTP"
+  node viewserver as "View"
+}
+
+package client {
+  node webrtcc as "WebRTC"
+  node parserc as "Request Manager"
+  node storec as "Request Store"
+  node eventmanagerc as "Event Manager"
+  node httpclient as "HTTP"
+  node viewclient as "View"
+}
+
+client -l-> server
+server -r-> client
+client -r-> clientdb
+server -l-> serverdb
+
+webrtcc -l-> eventmanagerc
+webrtcs -l-> eventmanagers
+parserc --> eventmanagerc
+parsers --> eventmanagers
+
+parsers -d-> serverapp
+parserc -d-> clientapp
+serverapp -u-> parsers
+clientapp -u-> parserc
+
+httpclient -d-> viewclient
+viewclient -d-> parserc
+parserc -u-> storec
+
+httpserver -d-> viewserver
+viewserver -d-> parsers
+parsers -u-> stores
+
+@enduml
